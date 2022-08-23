@@ -8,36 +8,34 @@ $(document).ready(() => {
         for (let j = 0; j < colomns; j++, order++, left -= 100) {
             let piece = document.createElement('div');
             let pieceInFinalPicture = document.createElement('div');
+            let leftPosition = Math.floor(Math.random() * 300) + 'px';
+               let topPosition = Math.floor(Math.random() * 300) + 'px';
             $(pieceInFinalPicture).addClass('pieceInFinalPicture');
             $(piece).addClass('piece')
                 .css({
-                    'background-position': left + "px " + top + "px"
+                    'background-position': left + "px " + top + "px",
+                    width: '100px',
+                    height: '100px',
+                    left:leftPosition,
+                    top:topPosition,
+                    position:'absolute'
                 })
                 .attr('data-order', order)
             $('.puzzle').append(piece);
             $('.picture').append(pieceInFinalPicture);
         }
     }
-    let pieces = $('.piece');
-    console.log(pieces.length);
+    let pieces = $('.puzzle div');
 
     let j;
     for (let i = 0; i < pieces.length; i++) {
         j = Math.floor(Math.random() * pieces.length);
         $(pieces[i]).before($(pieces[j]));
     }
-    // return pieces;
 
     $('.piece').draggable({
-        revert: 'invalid',
-        start: () => {
-            console.log($(this));
-            if ($(this).hasClass('droppedPiece')) {
-                debugger
-                $(this).parent().removeClass('piecePresent');
-                $(this).removeClass('droppedPiece');
-            }
-        }
+        containment:'container'
+
     })
 
     $('.pieceInFinalPicture').droppable({
@@ -62,6 +60,7 @@ $(document).ready(() => {
                 returnPiece()
             } else {
                 droppedOn.addClass('piecePresent');
+                console.log($(draggableElement));
                 $(draggableElement).addClass('droppedPiece')
                     .appendTo(droppedOn)
                     .css({
@@ -80,14 +79,11 @@ $(document).ready(() => {
         }
     })
 
-
-
     function checkIfPuzzleSolved() {
         if ($('.picture .piecePresent').length != 16) {
             return false
         }
         for (let i = 0; i < 16; i++) {
-            debugger
             let item = $('.droppedPiece:eq(' + i + ')').data('order');
             if (i != item) {
                 $('.puzzle').text('Try again');

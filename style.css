@@ -8,7 +8,7 @@
     width: 1000px;
     display: flex;
     justify-content: space-evenly;
-    margin: 5%;
+    margin: 5% auto;
 }
 
 section {
@@ -17,10 +17,11 @@ section {
     outline: 1px solid black;
     box-shadow: -1px 0px 20px 0px #6c6c7f;
     background-color: ghostwhite;
-
+ position: relative;
 }
 
-.puzzle, .picture {
+
+ .picture {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -30,7 +31,7 @@ section {
     margin: 0;
 }
 
-.piece {
+.piece, .newPiece {
     width: 100px;
     height: 100px;
     border: 1px solid #000;
@@ -39,7 +40,10 @@ section {
     background-image: url(images/earth.jpg);
     z-index: 2;
 }
-.pieceInFinalPicture{
+.newPiece{
+    background-image: none;
+}
+.pieceInFinalPicture, .pieceInStartPicture{
     width: 100px;
     height: 100px;
     outline: 1px solid #000;
